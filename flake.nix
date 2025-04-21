@@ -45,8 +45,20 @@
           program = "${pkgs.${system}.writeShellScript "watch" ''
             echo "Watching for changes..."
             mkdir -p result_watch
-            exec ${tex_pkgs.${system}}/bin/latexmk -pvc -pdflua -outdir=result_watch main.tex
+            if ! pgrep -x "zathura" > /dev/null; then
+              ${pkgs.${system}.zathura}/bin/zathura result_watch/main.pdf &
+            fi
+            exec ${tex_pkgs.${system}}/bin/latexmk -pvc -pdf -outdir=result_watch main.tex
             find | grep "eps-converted-to.pdf" | xargs rm
+          ''}";
+        };
+
+        clear = {
+          type = "app";
+          program = "${pkgs.${system}.writeShellScript "clear" ''
+            echo "Remove generated files"
+            git ls-files --others -i --exclude-standard | xargs rm -r
+            rm -r result*
           ''}";
         };
       });
