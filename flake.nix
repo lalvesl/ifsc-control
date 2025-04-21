@@ -45,10 +45,18 @@
           program = "${pkgs.${system}.writeShellScript "watch" ''
             echo "Watching for changes..."
             mkdir -p result
-            exec latexmk -pvc -pdf -outdir=result main.tex
+            exec ${tex_pkgs.${system}}/bin/latexmk -pvc -pdf -outdir=result main.tex
           ''}";
         };
       });
+
+      # packages = for_each_system (system: {
+      #   default = pkgs.${system}.writeShellScriptBin "latex-build" ''
+      #     rm -r result
+      #     mkdir -p result
+      #     exec ${tex_pkgs.${system}}/bin/latexmk -pdf -outdir=result main.tex
+      #   '';
+      # });
 
       packages = for_each_system (system: {
         default = pkgs.${system}.stdenv.mkDerivation {
@@ -61,17 +69,24 @@
 
           buildPhase = ''
             echo "📦 Building your document..."
-            # mkdir -p result
-            latexmk -outdir=result -pdf main.tex
+            mkdir -p $out
+            ls -lha
+            echo $src
+            echo aaaaaaa
+            echo $src/*
+            pwd
+            cp -r $src/* .
+            ls -lha
+            latexmk -pdf main.tex
             echo "✅ Build complete: main.pdf"
           '';
 
           installPhase = ''
             mkdir -p $out
-            cp result/main.pdf $out/
+            cp main.pdf $out/
           '';
 
-          dontFixup = true;
+          # dontFixup = true;
           # unpackPhase = "true";
         };
       });
