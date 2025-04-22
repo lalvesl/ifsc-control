@@ -24,6 +24,7 @@ jobs:
           mkdir -p release
           cp result/lucas_alves_de_lima.pdf release/lucas_alves_de_lima.pdf
 
-      - uses: softprops/action-gh-release@v2
+      - uses: actions/upload-artifact@v4
         with:
-          files: release/lucas_alves_de_lima.pdf
+          path: release/lucas_alves_de_lima.pdf
+          compression-level: 0
