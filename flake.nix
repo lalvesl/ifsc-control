@@ -83,13 +83,7 @@
           buildPhase = ''
             echo "📦 Building your document..."
             mkdir -p $out
-            ls -lha
-            echo $src
-            echo aaaaaaa
-            echo $src/*
-            pwd
             cp -r $src/* .
-            ls -lha
             latexmk -pdf main.tex
             echo "✅ Build complete: main.pdf"
           '';
