@@ -96,7 +96,7 @@
 
           installPhase = ''
             mkdir -p $out
-            cp main.pdf $out/
+            cp main.pdf $out/lucas_alves_de_lima.pdf
           '';
 
           # dontFixup = true;
