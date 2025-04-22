@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  build-tex:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +24,6 @@ jobs:
           mkdir -p release
           cp result/lucas_alves_de_lima.pdf release/lucas_alves_de_lima.pdf
 
-      - uses: actions/upload-artifact@v4
+      - uses: softprops/action-gh-release@v2
         with:
-          path: release/lucas_alves_de_lima.pdf
+          files: release/lucas_alves_de_lima.pdf
